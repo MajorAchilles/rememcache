@@ -22,7 +22,7 @@ npm install
 Call these early in your app initialization to override defaults:
 
 ```ts
-import { configureRedisClient, configureMemClient } from './src/cacheProvider/cacheProvider';
+import { configureRedisClient, configureMemClient } from 'rememcache';
 
 configureRedisClient({ host: '127.0.0.1', port: 6379, recordTTLSeconds: 600 });
 configureMemClient({ recordTTLSeconds: 120, maxItems: 500 });
@@ -35,7 +35,7 @@ If you don't call configure, the library will use sensible defaults and singleto
 Providers wrap the shared client but keep their own prefix. Use `getProvider` to create providers easily:
 
 ```ts
-import { getProvider } from './src/cacheProvider/cacheProvider';
+import { getProvider } from 'rememcache';
 
 const tenantA = getProvider('redis', { prefix: 'tenantA:' });
 const tenantB = getProvider('redis', { prefix: 'tenantB:' });
@@ -72,7 +72,7 @@ This will build the project and run `runner.js`, which:
 You can instantiate provider classes directly if you prefer:
 
 ```ts
-import { RedisProvider, MemProvider } from './src/cacheProvider/cacheProvider';
+import { RedisProvider, MemProvider } from 'rememcache';
 
 const p = new RedisProvider(undefined, 'custom-prefix:');
 await p.setItem('k', { a: 1 });
@@ -102,7 +102,7 @@ You can create rate limiting providers that track request counts per user and wi
 Example:
 
 ```ts
-import { getRateLimitProvider } from './src/cacheProvider/RateLimitProvider';
+import { getRateLimitProvider } from 'rememcache';
 
 // Example: window=30s, maxRequests=10
 const rl = getRateLimitProvider('memory', { prefix: 'rl:tenantA:', windowSeconds: 30, maxRequests: 10 });
