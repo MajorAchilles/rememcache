@@ -67,6 +67,11 @@ export class MemCacheClient implements CacheClient {
     return Promise.resolve();
   }
 
+  public async delete(key: string): Promise<void> {
+    this.cache.delete(key);
+    return Promise.resolve();
+  }
+
   public isAvailable(): boolean {
     return this.isReady;
   }

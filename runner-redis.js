@@ -38,6 +38,15 @@
   const v = await provider.getItem(key);
   console.log('Read', key, '->', v);
 
+  // Demo: deleteItem
+  console.log('Testing deleteItem for redis: writing and deleting delete-key');
+  await provider.setItem('delete-key', { now: Date.now(), bye: true });
+  const beforeDelete = await provider.getItem('delete-key');
+  console.log('Before delete ->', beforeDelete);
+  await provider.deleteItem('delete-key');
+  const afterDelete = await provider.getItem('delete-key');
+  console.log('After delete ->', afterDelete);
+
   // TTL test: write a key and assert it expires after the configured TTL
   const ttlKey = 'ttl-key';
   console.log('Writing ttl-key with TTL (seconds):', ttlSec);

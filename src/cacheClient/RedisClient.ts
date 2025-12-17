@@ -94,6 +94,15 @@ export class RedisClient implements CacheClient {
     await this.ioRedisClient.set(key, value, 'EX', ttl);
     return Promise.resolve();
   }
+
+  public async delete(key: string): Promise<void> {
+    if (!this.isConnectionReady) {
+      return Promise.resolve();
+    }
+
+    await this.ioRedisClient.del(key);
+    return Promise.resolve();
+  }
 }
 
 export default RedisClient.getInstance();

@@ -5,6 +5,7 @@ import { RedisClient, RedisClientOptions } from '../cacheClient/RedisClient';
 export interface Provider {
   getItem<T>(key: string): Promise<T | undefined>;
   setItem<T>(key: string, value: T): Promise<void>;
+  deleteItem(key: string): Promise<void>;
   isAvailable(): boolean;
 }
 
@@ -34,6 +35,10 @@ export class MemProvider implements Provider {
     await this.client.set(`${this.prefix}${key}`, JSON.stringify(value));
   }
 
+  public async deleteItem(key: string): Promise<void> {
+    await this.client.delete(`${this.prefix}${key}`);
+  }
+
   public isAvailable(): boolean {
     return this.client.isAvailable();
   }
@@ -57,6 +62,10 @@ export class RedisProvider implements Provider {
 
   public async setItem<T>(key: string, value: T): Promise<void> {
     await this.client.set(`${this.prefix}${key}`, JSON.stringify(value));
+  }
+
+  public async deleteItem(key: string): Promise<void> {
+    await this.client.delete(`${this.prefix}${key}`);
   }
 
   public isAvailable(): boolean {

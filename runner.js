@@ -38,6 +38,15 @@
   console.log('Read demo-key after total 4s ->', v5);
   console.log('Read demo-key2 after total 4s ->', v6);
 
+  // Demo: deleteItem
+  console.log('Testing deleteItem: writing and deleting delete-key');
+  await provider.setItem('delete-key', { now: Date.now(), bye: true });
+  const beforeDel = await provider.getItem('delete-key');
+  console.log('Before delete ->', beforeDel);
+  await provider.deleteItem('delete-key');
+  const afterDel = await provider.getItem('delete-key');
+  console.log('After delete ->', afterDel);
+
 
   console.log('Runner complete.');
 })();

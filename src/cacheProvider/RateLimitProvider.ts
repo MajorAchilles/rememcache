@@ -59,6 +59,13 @@ export class RateLimitProvider {
   public isAvailable(): boolean {
     return this.client.isAvailable();
   }
+
+  /**
+   * Reset request counters for a user by deleting the stored entry.
+   */
+  public async reset(userId: string): Promise<void> {
+    await this.client.delete(`${this.prefix}${userId}`);
+  }
 }
 
 export const getRateLimitProvider = (

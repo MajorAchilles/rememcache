@@ -19,6 +19,12 @@
     await new Promise((r) => setTimeout(r, 400));
   }
 
+  // Reset counters via delete and show that user can make requests immediately
+  console.log('Resetting counters for u1 via reset()...');
+  await rl.reset('u1');
+  const okAfterReset = await rl.isWithinLimits('u1');
+  console.log('After reset, request allowed:', okAfterReset);
+
   console.log('Waiting for window to expire...');
   await new Promise((r) => setTimeout(r, (opts.windowSeconds + 1) * 1000));
 

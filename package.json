@@ -1,6 +1,6 @@
 {
   "name": "rememcache",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A smart caching abstraction layer that uses Redis if available, otherwise falls back to an in-memory LRU cache.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

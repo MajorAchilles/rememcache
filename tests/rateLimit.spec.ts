@@ -60,4 +60,17 @@ describe('RateLimitProvider', () => {
     expect(await rp.isWithinLimits('user')).toBe(true);
     expect(await rp.isWithinLimits('user')).toBe(false);
   });
+
+  it('reset clears counters so user can make requests immediately', async () => {
+    const r = getRateLimitProvider('memory', { prefix: 'rr:', maxRequests: 1 });
+
+    expect(await r.isWithinLimits('u3')).toBe(true);
+    expect(await r.isWithinLimits('u3')).toBe(false);
+
+    // reset counters
+    await (r as any).reset('u3');
+
+    // should be allowed again immediately
+    expect(await r.isWithinLimits('u3')).toBe(true);
+  });
 });

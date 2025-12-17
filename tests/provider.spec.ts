@@ -37,6 +37,9 @@ describe('Providers', () => {
       async set(k: string, v: string) {
         store.set(k, v);
       },
+      async delete(k: string) {
+        store.delete(k);
+      },
       isAvailable() {
         return true;
       },
@@ -53,5 +56,43 @@ describe('Providers', () => {
 
     expect(a).toEqual({ a: 1 });
     expect(b).toBeUndefined();
+  });
+
+  it('deleteItem removes the key for both providers', async () => {
+    // Ensure mem client TTL is sane for this test (previous tests may have modified it)
+    configureMemClient({ recordTTLSeconds: 60 });
+    const mem = getProvider('memory', { prefix: 'd:' });
+    await mem.setItem('k', { v: 2 });
+    const before = await mem.getItem('k');
+    expect(before).toEqual({ v: 2 });
+    await mem.deleteItem('k');
+    const after = await mem.getItem('k');
+    expect(after).toBeUndefined();
+
+    // Redis fake client delete
+    const store = new Map<string, string>();
+    const fakeClient = {
+      async get(k: string) {
+        return store.has(k) ? store.get(k)! : null;
+      },
+      async set(k: string, v: string) {
+        store.set(k, v);
+      },
+      async delete(k: string) {
+        store.delete(k);
+      },
+      isAvailable() {
+        return true;
+      },
+    };
+
+    const { RedisProvider } = await import('../src/cacheProvider/cacheProvider');
+    const r = new RedisProvider(fakeClient as any, 'z:');
+    await r.setItem('k', { a: 3 });
+    const beforeR = await r.getItem('k');
+    expect(beforeR).toEqual({ a: 3 });
+    await r.deleteItem('k');
+    const afterR = await r.getItem('k');
+    expect(afterR).toBeUndefined();
   });
 });
