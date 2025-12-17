@@ -1,4 +1,6 @@
 runner.js
 runner-rate-limit.js
+runner-redis.js
+runner-rate-redis.js
 dist/
 node_modules/

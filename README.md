@@ -125,4 +125,26 @@ npm run run:rate-runner
 
 This builds and runs `runner-rate-limit.js`, which exercises a memory-based rate limiter and prints whether requests are allowed or blocked.
 
+### Redis runner
+
+A runner is included to test Redis-backed providers locally (requires a Redis server accessible at `REDIS_HOST`/`REDIS_PORT`):
+
+```bash
+npm run redis-runner
+```
+
+If you need to override connection details: `REDIS_HOST`, `REDIS_PORT`, `REDIS_DB`, `REDIS_PASSWORD` are read by the runner (optional).
+
+The runner also tests TTL behavior: set `REDIS_RECORD_TTL_SECONDS` to change the record TTL used for the demo (default is 1 second). The runner writes a TTL key, reads it immediately, waits for TTL expiry, and confirms the key has expired.
+
+### Redis rate-limiter demo runner
+
+A runner is included to demonstrate rate limiter behavior using Redis:
+
+```bash
+npm run run:rate-redis-runner
+```
+
+It uses environment variables `RATE_LIMITING_WINDOW_SECONDS` and `RATE_LIMITING_MAX_REQUESTS` to control the behavior (defaults: 3s window, 2 max requests).
+
 ---

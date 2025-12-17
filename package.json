@@ -21,6 +21,8 @@
     "test": "vitest --run --environment node",
     "runner": "npm run build && node runner.js",
     "rate-runner": "npm run build && node runner-rate-limit.js",
+    "redis-runner": "npm run build && node runner-redis.js",
+    "redis-rate-runner": "npm run build && node runner-rate-redis.js",
     "test:coverage": "vitest --coverage",
     "lint": "eslint \"./src/**/*.{ts,tsx,js}\"",
     "format": "prettier --write .",
