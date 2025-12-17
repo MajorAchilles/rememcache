@@ -66,7 +66,6 @@ This will build the project and run `runner.js`, which:
 - creates a `memory` provider with prefix `runner:`
 - writes and reads a demo key and prints the results
 
-
 ### 3) Direct provider classes (optional)
 
 You can instantiate provider classes directly if you prefer:
@@ -115,6 +114,7 @@ Options:
 
 - `windowSeconds` (seconds)
 - `maxRequests`
+
 ### Rate limiter demo runner
 
 A runner is included to demonstrate rate limiting behavior locally:
