@@ -10,22 +10,34 @@
 
   
   console.log('Configuring mem client for demo (10s TTL)');
-  configureMemClient({ recordTTLSeconds: 10 });
+  configureMemClient({ recordTTLSeconds: 2, maxItems: 2, maxSizeInBytes: 128 });
 
   const provider = getProvider('memory', { prefix: 'runner:' });
   console.log('Using provider with prefix:', provider.keyPrefix ?? '<unknown>');
 
   // Demo: set and get
   await provider.setItem('demo-key', { now: Date.now(), hello: 'world' });
+  await provider.setItem('demo-key2', { now: Date.now(), hello: 'world again!' });
   console.log('Wrote demo-key');
 
   const v = await provider.getItem('demo-key');
+  const v2 = await provider.getItem('demo-key2');
   console.log('Read demo-key ->', v);
+  console.log('Read demo-key2 ->', v2);
 
   // Wait 1 second and read again
   await new Promise((r) => setTimeout(r, 1000));
-  const v2 = await provider.getItem('demo-key');
-  console.log('Read demo-key after 1s ->', v2);
+  const v3 = await provider.getItem('demo-key');
+  const v4 = await provider.getItem('demo-key2');
+  console.log('Read demo-key after 1s ->', v3);
+  console.log('Read demo-key2 after 1s ->', v4);
+
+  await new Promise((r) => setTimeout(r, 3000));
+  const v5 = await provider.getItem('demo-key');
+  const v6 = await provider.getItem('demo-key2');
+  console.log('Read demo-key after total 4s ->', v5);
+  console.log('Read demo-key2 after total 4s ->', v6);
+
 
   console.log('Runner complete.');
 })();
