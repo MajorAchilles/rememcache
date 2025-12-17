@@ -1,6 +1,6 @@
 {
   "name": "rememcache",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A smart caching abstraction layer that uses Redis if available, otherwise falls back to an in-memory LRU cache.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/MajorAchilles/rememcache"
+    "url": "git+https://github.com/MajorAchilles/rememcache.git"
   },
   "scripts": {
     "clean": "rimraf dist",
