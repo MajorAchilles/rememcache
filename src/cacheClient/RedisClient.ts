@@ -44,15 +44,17 @@ export class RedisClient implements CacheClient {
   private recordTTLSeconds: number;
 
   private constructor(redisClientOptions?: Partial<RedisClientOptions>) {
+    const enableTLS = redisClientOptions?.enableTLS ?? defaultRedisClientOptions.enableTLS;
     const redisConfig = {
-      host: redisClientOptions?.host || defaultRedisClientOptions.host,
-      port: redisClientOptions?.port || defaultRedisClientOptions.port,
-      db: redisClientOptions?.db || defaultRedisClientOptions.db,
-      username: redisClientOptions?.username || defaultRedisClientOptions.username,
-      password: redisClientOptions?.password || defaultRedisClientOptions.password,
-      retryStrategy: redisClientOptions?.retryStrategy || defaultRedisClientOptions.retryStrategy,
+      host: redisClientOptions?.host ?? defaultRedisClientOptions.host,
+      port: redisClientOptions?.port ?? defaultRedisClientOptions.port,
+      db: redisClientOptions?.db ?? defaultRedisClientOptions.db,
+      username: redisClientOptions?.username ?? defaultRedisClientOptions.username,
+      password: redisClientOptions?.password ?? defaultRedisClientOptions.password,
+      retryStrategy: redisClientOptions?.retryStrategy ?? defaultRedisClientOptions.retryStrategy,
+      tls: enableTLS ? (redisClientOptions?.tls ?? {}) : undefined,
     };
-    this.recordTTLSeconds = redisClientOptions?.recordTTLSeconds || defaultRedisClientOptions.recordTTLSeconds!;
+    this.recordTTLSeconds = redisClientOptions?.recordTTLSeconds ?? defaultRedisClientOptions.recordTTLSeconds!;
     this.ioRedisClient = new IORedis(redisConfig);
 
     this.ioRedisClient.on('error', (err) => {
