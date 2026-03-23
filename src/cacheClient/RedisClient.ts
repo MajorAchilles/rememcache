@@ -5,6 +5,7 @@ export type RedisClientOptions = {
   host: string;
   port: number;
   db: number;
+  username?: string;
   password?: string;
   recordTTLSeconds?: number;
   retryStrategy?: (times: number) => number | null;
@@ -16,6 +17,7 @@ const defaultRedisClientOptions: RedisClientOptions = {
   host: '127.0.0.1',
   port: 6379,
   db: 0,
+  username: 'default',
   password: undefined,
   recordTTLSeconds: 300,
   retryStrategy: (times: number) => {
@@ -42,6 +44,7 @@ export class RedisClient implements CacheClient {
       host: redisClientOptions?.host || defaultRedisClientOptions.host,
       port: redisClientOptions?.port || defaultRedisClientOptions.port,
       db: redisClientOptions?.db || defaultRedisClientOptions.db,
+      username: redisClientOptions?.username || defaultRedisClientOptions.username,
       password: redisClientOptions?.password || defaultRedisClientOptions.password,
       retryStrategy: redisClientOptions?.retryStrategy || defaultRedisClientOptions.retryStrategy,
     };
