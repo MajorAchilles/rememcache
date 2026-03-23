@@ -43,7 +43,7 @@ describe('RedisClient TLS wiring', () => {
     expect(redisConfig.tls).toEqual({ rejectUnauthorized: false, servername: 'cache.example.com' });
   });
 
-  it('auto-enables tls when tls options are provided and enableTLS is undefined', async () => {
+  it('does not enable tls when tls options are provided but enableTLS is undefined', async () => {
     const { RedisClient } = await import('../src/cacheClient/RedisClient');
     redisCtorMock.mockClear();
 
@@ -56,7 +56,7 @@ describe('RedisClient TLS wiring', () => {
 
     expect(redisCtorMock).toHaveBeenCalledTimes(1);
     const redisConfig = redisCtorMock.mock.calls[0][0] as Record<string, unknown>;
-    expect(redisConfig.tls).toEqual({ rejectUnauthorized: false, servername: 'cache.example.com' });
+    expect(redisConfig.tls).toBeUndefined();
   });
 
   it('enables tls with default options when enableTLS is true and tls options are not provided', async () => {
