@@ -7,6 +7,8 @@ export type RedisClientOptions = {
   db: number;
   username?: string;
   password?: string;
+  enableTLS?: boolean;
+  tls?: Record<string, unknown>;
   recordTTLSeconds?: number;
   retryStrategy?: (times: number) => number | null;
   onConnect?: () => void;
@@ -19,6 +21,8 @@ const defaultRedisClientOptions: RedisClientOptions = {
   db: 0,
   username: 'default',
   password: undefined,
+  enableTLS: false,
+  tls: undefined,
   recordTTLSeconds: 300,
   retryStrategy: (times: number) => {
     const maxDelay = 20000; // 20 seconds
